@@ -29,10 +29,14 @@ client.on('messageCreate', async function(message) {
     if (message.author.bot) return;
 
     if (message.content.match(/^prout$/)) {
-        message.reply('Caca');
+        // random number
+        const max = 2;
+        const random = Math.floor(Math.random() * Math.floor(max)) + 1;
+
+        // file name with random number selected
+        const fartSound = path.join(__dirname + "/sound", `fart${random}.mp3`);
 
         // send fart sound in text channel
-        const fartSound = path.join(__dirname + "/sound", 'fart.mp3');
         message.channel.send({ files: [fartSound] });
         
     }
