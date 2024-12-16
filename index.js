@@ -28,7 +28,7 @@ client.on('ready', () => {
 client.on('messageCreate', async function(message) {
     if (message.author.bot) return;
 
-    if (message.content.match(/^prout$/)) {
+    if (message.content.match(/^prout$/i)) {
         // random number
         const max = 2;
         const random = Math.floor(Math.random() * Math.floor(max)) + 1;
