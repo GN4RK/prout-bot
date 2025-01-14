@@ -31,6 +31,8 @@ fs.readdirSync('./sound').forEach(file => {
 // login to discord
 client.login(discordToken);
 
+let lastFartSound = null;
+
 // when bot is ready
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
@@ -41,13 +43,19 @@ client.on('messageCreate', async function(message) {
 
     if (message.content.match(/^prout$/i)) {
 
-        // get random fart sound from fartSounds list
-        const randomFartSound = fartSounds[Math.floor(Math.random() * fartSounds.length)];
+        // get a random fart sound different from the last one
+        let randomFartSound;
+        do {
+            randomFartSound = fartSounds[Math.floor(Math.random() * fartSounds.length)];
+        } while (randomFartSound === lastFartSound);
 
-        // path to random fart sound
+        // save the last fart sound played
+        lastFartSound = randomFartSound;
+
+        // path to the random fart sound
         const randomFartSoundPath = `${soundPath}/${randomFartSound}`;
 
-        // send fart sound in text channel
+        // send the fart sound
         message.channel.send({ files: [randomFartSoundPath] });
         
     }
