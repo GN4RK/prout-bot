@@ -22,16 +22,21 @@ const discordToken = process.env.DISCORD_TOKEN;
 
 // list of fart sounds mp3
 const fartSounds = [];
+const miaouSounds = [];
 
 // get all files in sound directory
-fs.readdirSync('./sound').forEach(file => {
+fs.readdirSync('./sound/prout').forEach(file => {
     fartSounds.push(file);
+});
+fs.readdirSync('./sound/miaou').forEach(file => {
+    miaouSounds.push(file);
 });
 
 // login to discord
 client.login(discordToken);
 
 let lastFartSound = null;
+let lastMiaouSound = null;
 
 // when bot is ready
 client.on('ready', () => {
@@ -41,6 +46,7 @@ client.on('ready', () => {
 client.on('messageCreate', async function(message) {
     if (message.author.bot) return;
 
+    // prout command
     if (message.content.match(/^prout$/i)) {
 
         // get a random fart sound different from the last one
@@ -53,10 +59,29 @@ client.on('messageCreate', async function(message) {
         lastFartSound = randomFartSound;
 
         // path to the random fart sound
-        const randomFartSoundPath = `${soundPath}/${randomFartSound}`;
+        const randomFartSoundPath = `${soundPath}/prout/${randomFartSound}`;
 
         // send the fart sound
         message.channel.send({ files: [randomFartSoundPath] });
         
     }
+
+    // miaou command
+    if (message.content.match(/^miaou$/i)) {
+        // get a random miaou sound
+        let randomMiaouSound;
+        do {
+            randomMiaouSound = miaouSounds[Math.floor(Math.random() * miaouSounds.length)];
+        } while (randomMiaouSound === lastMiaouSound);
+
+        // save the last fart sound played
+        lastMiaouSound = randomMiaouSound;
+
+        // path to the random miaou sound
+        const randomMiaouSoundPath = `${soundPath}/miaou/${randomMiaouSound}`;
+
+        // send the miaou sound
+        message.channel.send({ files: [randomMiaouSoundPath] });
+    }
+
 });
