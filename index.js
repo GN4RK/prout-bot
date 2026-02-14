@@ -51,7 +51,7 @@ function randomSound(type) {
             return randomMiaou();
         case "random":
             let nb = Math.floor(Math.random() * 2);
-            if (nb == 0) return randomFart;
+            if (nb == 0) return randomFart();
             return randomMiaou();
     }
 }
