@@ -44,6 +44,7 @@ client.on('ready', () => {
 });
 
 function randomSound(type) {
+    console.log('Random Type');
     switch (type) {
         case "prout":
             return randomFart();
@@ -57,6 +58,7 @@ function randomSound(type) {
 }
 
 function randomFart() {
+    console.log('Random Fart');
     // get a random fart sound different from the last one
     let randomFartSound;
     do {
@@ -71,6 +73,7 @@ function randomFart() {
 }
 
 function randomMiaou() {
+    console.log('Random Miaou');
     // get a random miaou sound
     let randomMiaouSound;
     do {
