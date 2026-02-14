@@ -43,45 +43,66 @@ client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
 });
 
+function randomSound(type) {
+    switch (type) {
+        case "prout":
+            return randomFart();
+        case "miaou":
+            return randomMiaou();
+        case "random":
+            let nb = Math.floor(Math.random() * 2);
+            if (nb == 0) return randomFart;
+            return randomMiaou();
+    }
+}
+
+function randomFart() {
+    // get a random fart sound different from the last one
+    let randomFartSound;
+    do {
+        randomFartSound = fartSounds[Math.floor(Math.random() * fartSounds.length)];
+    } while (randomFartSound === lastFartSound);
+
+    // save the last fart sound played
+    lastFartSound = randomFartSound;
+
+    // path to the random fart sound
+    return `${soundPath}/prout/${randomFartSound}`;
+}
+
+function randomMiaou() {
+    // get a random miaou sound
+    let randomMiaouSound;
+    do {
+        randomMiaouSound = miaouSounds[Math.floor(Math.random() * miaouSounds.length)];
+    } while (randomMiaouSound === lastMiaouSound);
+
+    // save the last fart sound played
+    lastMiaouSound = randomMiaouSound;
+
+    // path to the random miaou sound
+    return `${soundPath}/miaou/${randomMiaouSound}`;
+}
+
 client.on('messageCreate', async function(message) {
     if (message.author.bot) return;
 
     // prout command
     if (message.content.match(/^prout$/i)) {
-
-        // get a random fart sound different from the last one
-        let randomFartSound;
-        do {
-            randomFartSound = fartSounds[Math.floor(Math.random() * fartSounds.length)];
-        } while (randomFartSound === lastFartSound);
-
-        // save the last fart sound played
-        lastFartSound = randomFartSound;
-
-        // path to the random fart sound
-        const randomFartSoundPath = `${soundPath}/prout/${randomFartSound}`;
-
         // send the fart sound
-        message.channel.send({ files: [randomFartSoundPath] });
-        
+        message.channel.send({ files: [randomFart()] });
     }
 
     // miaou command
     if (message.content.match(/^miaou$/i)) {
-        // get a random miaou sound
-        let randomMiaouSound;
-        do {
-            randomMiaouSound = miaouSounds[Math.floor(Math.random() * miaouSounds.length)];
-        } while (randomMiaouSound === lastMiaouSound);
-
-        // save the last fart sound played
-        lastMiaouSound = randomMiaouSound;
-
-        // path to the random miaou sound
-        const randomMiaouSoundPath = `${soundPath}/miaou/${randomMiaouSound}`;
-
         // send the miaou sound
-        message.channel.send({ files: [randomMiaouSoundPath] });
+        message.channel.send({ files: [randomMiaou()] });
+    }
+
+    // random
+    if (message.content.match(/^random$/i)) {
+        // send random sound
+        message.channel.send({ files: [randomSound()] });
     }
 
 });
