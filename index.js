@@ -43,18 +43,11 @@ client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
 });
 
-function randomSound(type) {
+function randomSound() {
     console.log('Random Type');
-    switch (type) {
-        case "prout":
-            return randomFart();
-        case "miaou":
-            return randomMiaou();
-        case "random":
-            let nb = Math.floor(Math.random() * 2);
-            if (nb == 0) return randomFart();
-            return randomMiaou();
-    }
+    let nb = Math.floor(Math.random() * 2);
+    if (nb == 0) return randomFart();
+    return randomMiaou();
 }
 
 function randomFart() {
