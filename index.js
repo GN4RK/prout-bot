@@ -1,4 +1,4 @@
-const { Client, GatewayCloseCodes, GatewayIntentBits, Partials } = require('discord.js');
+const { Client, GatewayIntentBits, Partials } = require('discord.js');
 const dotenv = require('dotenv');
 const fs = require('fs');
 const soundPath = './sound';
@@ -98,7 +98,10 @@ client.on('messageCreate', async function(message) {
     // random
     if (message.content.match(/^random$/i)) {
         // send random sound
-        message.channel.send({ files: [randomSound()] });
+        message.channel.send({ files: [{
+            attachment: randomSound(),
+            name: "secret"
+        }] });
     }
 
 });
