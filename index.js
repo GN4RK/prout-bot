@@ -2,6 +2,7 @@ const { Client, GatewayIntentBits, Partials } = require('discord.js');
 const dotenv = require('dotenv');
 const fs = require('fs');
 const soundPath = './sound';
+const path = require('path');
 
 dotenv.config();
 
@@ -98,9 +99,12 @@ client.on('messageCreate', async function(message) {
     // random
     if (message.content.match(/^random$/i)) {
         // send random sound
+        const file = randomSound();
+        const ext = path.extname(file);
+
         message.channel.send({ files: [{
-            attachment: randomSound(),
-            name: "secret"
+            attachment: file,
+            name: `secret${ext}`
         }] });
     }
 
