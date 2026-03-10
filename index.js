@@ -44,14 +44,14 @@ client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
 });
 
-function randomSound() {
+function randomSound(message) {
     console.log('Random Type');
     let nb = Math.floor(Math.random() * 2);
-    if (nb == 0) return randomFart();
-    return randomMiaou();
+    if (nb == 0) return randomFart(message);
+    return randomMiaou(message);
 }
 
-function randomFart() {
+function randomFart(message) {
     console.log('Random Fart');
     // get a random fart sound different from the last one
     let randomFartSound;
@@ -66,7 +66,7 @@ function randomFart() {
     return `${soundPath}/prout/${randomFartSound}`;
 }
 
-function randomMiaou() {
+function randomMiaou(message) {
     const serverName = message.guild ? message.guild.id + ":" + message.guild.name : 'DM';
     addLog('info', 'Random Miaou', serverName);
     console.log('Random Miaou');
@@ -110,19 +110,19 @@ client.on('messageCreate', async function(message) {
     // prout command
     if (message.content.match(/^prout$/i)) {
         // send the fart sound
-        message.channel.send({ files: [randomFart()] });
+        message.channel.send({ files: [randomFart(message)] });
     }
 
     // miaou command
     if (message.content.match(/^miaou$/i)) {
         // send the miaou sound
-        message.channel.send({ files: [randomMiaou()] });
+        message.channel.send({ files: [randomMiaou(message)] });
     }
 
     // random
     if (message.content.match(/^random$/i)) {
         // send random sound
-        const file = randomSound();
+        const file = randomSound(message);
         const ext = path.extname(file);
 
         message.channel.send({ files: [{
