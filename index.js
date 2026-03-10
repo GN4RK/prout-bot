@@ -45,15 +45,16 @@ client.on('ready', () => {
 });
 
 function randomSound(message) {
-    console.log('Random Type');
+    const serverName = message.guild ? message.guild.id + ":" + message.guild.name : 'DM';
+    addLog('info', 'Random Sound', serverName);
     let nb = Math.floor(Math.random() * 2);
-    if (nb == 0) return randomFart(message);
-    return randomMiaou(message);
+    if (nb == 0) return randomFart(message, false);
+    return randomMiaou(message, false);
 }
 
-function randomFart(message) {
+function randomFart(message, log = true) {
     const serverName = message.guild ? message.guild.id + ":" + message.guild.name : 'DM';
-    addLog('info', 'Random Fart', serverName);
+    if (log) addLog('info', 'Random Fart', serverName);
     // get a random fart sound different from the last one
     let randomFartSound;
     do {
@@ -67,9 +68,9 @@ function randomFart(message) {
     return `${soundPath}/prout/${randomFartSound}`;
 }
 
-function randomMiaou(message) {
+function randomMiaou(message, log = true) {
     const serverName = message.guild ? message.guild.id + ":" + message.guild.name : 'DM';
-    addLog('info', 'Random Miaou', serverName);
+    if (log) addLog('info', 'Random Miaou', serverName);
     // get a random miaou sound
     let randomMiaouSound;
     do {
