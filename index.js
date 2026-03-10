@@ -67,6 +67,8 @@ function randomFart() {
 }
 
 function randomMiaou() {
+    const serverName = message.guild ? message.guild.id + ":" + message.guild.name : 'DM';
+    addLog('info', 'Random Miaou', serverName);
     console.log('Random Miaou');
     // get a random miaou sound
     let randomMiaouSound;
@@ -80,6 +82,27 @@ function randomMiaou() {
     // path to the random miaou sound
     return `${soundPath}/miaou/${randomMiaouSound}`;
 }
+
+function addLog(level, message, server = "", channel = "", author = "")
+{
+    let infos = {
+        timestamp: getNowFormat(),
+        level: level,
+        message: message
+    };
+
+    if (server) infos.server = server;
+    if (channel) infos.channel = channel;
+    if (author) infos.author = author;
+
+    if (level == "error") {
+        console.error(JSON.stringify(infos));
+        return;
+    }
+
+    console.log(JSON.stringify(infos));
+}
+
 
 client.on('messageCreate', async function(message) {
     if (message.author.bot) return;
