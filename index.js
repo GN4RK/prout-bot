@@ -52,7 +52,8 @@ function randomSound(message) {
 }
 
 function randomFart(message) {
-    console.log('Random Fart');
+    const serverName = message.guild ? message.guild.id + ":" + message.guild.name : 'DM';
+    addLog('info', 'Random Fart', serverName);
     // get a random fart sound different from the last one
     let randomFartSound;
     do {
@@ -69,7 +70,6 @@ function randomFart(message) {
 function randomMiaou(message) {
     const serverName = message.guild ? message.guild.id + ":" + message.guild.name : 'DM';
     addLog('info', 'Random Miaou', serverName);
-    console.log('Random Miaou');
     // get a random miaou sound
     let randomMiaouSound;
     do {
